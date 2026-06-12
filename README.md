@@ -21,3 +21,14 @@
 6. temp_difference shows heat gap between environment and machine.
 7. Power feature combines speed and torque to show machine load.
 8. tool_wear_rate shows how fast tool is getting damaged.
+
+## Day 3 Observations
+
+1. Outlier detection done using boxplots for all 5 sensor columns.
+2. Air temperature, Process temperature and Tool wear have no outliers - stable readings.
+3. Rotational speed has outliers on the higher side - some machines spin too fast.
+4. Torque has outliers on both sides - some machines underloaded or overloaded.
+5. Label encoding applied on Type column - L=0, M=1, H=2.
+6. New feature heat_stress_index created - Air temperature multiplied by Tool wear.
+7. New feature speed_torque_ratio created - Rotational speed divided by Torque.
+8. New feature wear_per_rotation created - Tool wear divided by Rotational speed, scaled by 1000.
