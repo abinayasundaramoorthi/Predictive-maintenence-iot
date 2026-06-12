@@ -16,3 +16,10 @@
 - Performed IQR-based outlier detection.
 - Documented outlier findings.
 
+## Day 4 - Correlation Analysis
+- Generated correlation matrix and heatmap.
+- Analyzed relationships between sensor features.
+- Identified Torque and Tool Wear as key factors.
+- Saved visualizations and documented insights.
+
+ 
