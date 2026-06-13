@@ -32,3 +32,14 @@
 6. New feature heat_stress_index created - Air temperature multiplied by Tool wear.
 7. New feature speed_torque_ratio created - Rotational speed divided by Torque.
 8. New feature wear_per_rotation created - Tool wear divided by Rotational speed, scaled by 1000.
+
+## Week 2 - Day 1 Observations
+
+1. Started Week 2 - Contextual Data Fusion and Feature Engineering.
+2. Simulated external context data since real external data is not available.
+3. Created Ambient_temperature column using normal distribution (mean=295K, std=3) - represents outside weather temperature.
+4. Created Load_density column using uniform distribution (0.3 to 1.0) - represents factory busy-ness.
+5. Used random seed (42) to keep simulated values consistent across runs.
+6. Created temperature_gap feature - Air temperature minus Ambient temperature - shows factory heat vs outside weather.
+7. Recreated power feature and created load_stress feature - power multiplied by Load_density - shows combined machine and factory-wide stress.
+8. Next step - verify if these new fusion features have stronger relationship with Target than individual sensors.
