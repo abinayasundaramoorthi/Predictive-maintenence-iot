@@ -22,4 +22,9 @@
 - Identified Torque and Tool Wear as key factors.
 - Saved visualizations and documented insights.
 
- 
+ ## Day 5 - Week 1 EDA Report
+- Combined findings from Days 1–4.
+- Reviewed dataset quality and feature relationships.
+- Summarized key insights from EDA.
+- Organized notebooks and visualizations.
+- Completed Week 1 report documentation.
