@@ -54,3 +54,11 @@
 6. effective_power scored 0.145 - lower than power alone (0.176).
 7. Conclusion - individual linear correlation does not show strong improvement from feature engineering, but features may still help the ML model capture non-linear patterns in Week 3. Simulated external data may not behave like real external data.
 
+## Week 2 - Day 3 Observations
+
+1. Conducted ablation study to prove external features improve prediction.
+2. Model A trained with only 5 original sensors - Macro F1 score: 0.679.
+3. Model B trained with 5 sensors + 8 engineered features - Macro F1 score: 0.693.
+4. Improvement of 0.014 proves that adding engineered features helps prediction.
+5. Added StandardScaler to fix convergence warning - scaling makes all features equal range.
+6. fit_transform used on train data, transform used on test data to avoid data leakage.
