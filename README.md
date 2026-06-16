@@ -33,32 +33,3 @@
 7. New feature speed_torque_ratio created - Rotational speed divided by Torque.
 8. New feature wear_per_rotation created - Tool wear divided by Rotational speed, scaled by 1000.
 
-## Week 2 - 
-## Day 1 Observations
-
-1. Started Week 2 - Contextual Data Fusion and Feature Engineering.
-2. Simulated external context data since real external data is not available.
-3. Created Ambient_temperature column using normal distribution (mean=295K, std=3) - represents outside weather temperature.
-4. Created Load_density column using uniform distribution (0.3 to 1.0) - represents factory busy-ness.
-5. Used random seed (42) to keep simulated values consistent across runs.
-6. Created temperature_gap feature - Air temperature minus Ambient temperature - shows factory heat vs outside weather.
-7. Recreated power feature and created load_stress feature - power multiplied by Load_density - shows combined machine and factory-wide stress.
-8. Next step - verify if these new fusion features have stronger relationship with Target than individual sensors.
-
- ## Day 2 Observations
- 1. Checked correlation of all 8 engineered features (from Days 2-4) with Target.
-2. Highest correlation: power (0.176) - close to but does not exceed Torque (0.19) from Week 1.
-3. Unexpected finding: temp_difference shows NEGATIVE correlation (-0.112) - opposite of initial hypothesis.
-4. Full results - temp_difference: -0.112, power: 0.176, tool_wear_rate: 0.130, heat_stress_index: 0.106, speed_torque_ratio: 0.063, wear_per_rotation: 0.130, temperature_gap: 0.059, load_stress: 0.088.
-5. Created new feature effective_power = power / Ambient_temperature (in Celsius) - tests if power adjusted for ambient conditions improves correlation.
-6. effective_power scored 0.145 - lower than power alone (0.176).
-7. Conclusion - individual linear correlation does not show strong improvement from feature engineering, but features may still help the ML model capture non-linear patterns in Week 3. Simulated external data may not behave like real external data.
-
-## Week 2 - Day 3 Observations
-
-1. Conducted ablation study to prove external features improve prediction.
-2. Model A trained with only 5 original sensors - Macro F1 score: 0.679.
-3. Model B trained with 5 sensors + 8 engineered features - Macro F1 score: 0.693.
-4. Improvement of 0.014 proves that adding engineered features helps prediction.
-5. Added StandardScaler to fix convergence warning - scaling makes all features equal range.
-6. fit_transform used on train data, transform used on test data to avoid data leakage.
