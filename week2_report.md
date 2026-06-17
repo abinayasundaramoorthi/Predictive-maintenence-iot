@@ -18,7 +18,7 @@ Analyze contextual variables and understand their impact on machine failure.
 - No time-based information is available.
 - Seasonality analysis cannot be performed.
 
-## Week 2 - Day 2 Correlation Analysis
+# Week 2 - Day 2 Correlation Analysis
 
 ### Tasks Completed
 - Analyzed context variables against machine failure.
@@ -32,3 +32,22 @@ Analyze contextual variables and understand their impact on machine failure.
 - Torque and Tool Wear show stronger association with failure.
 - Machine Type has weak correlation with failure.
 - Context variables provide useful supplementary information.
+
+# Week 2 Day 3 - Context Impact Study
+
+## Objective
+To study how contextual variables influence machine failure.
+
+## Variables Analyzed
+- Air Temperature
+- Process Temperature
+- Torque
+- Tool Wear
+- Machine Type
+
+## Findings
+- Air Temperature shows limited impact on failure.
+- Process Temperature has weak influence.
+- Torque exhibits stronger variation between failed and non-failed machines.
+- Tool Wear tends to be higher in failed machines.
+- Machine failures occur across all machine types.
