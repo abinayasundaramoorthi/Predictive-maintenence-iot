@@ -51,3 +51,54 @@ To study how contextual variables influence machine failure.
 - Torque exhibits stronger variation between failed and non-failed machines.
 - Tool Wear tends to be higher in failed machines.
 - Machine failures occur across all machine types.
+
+# Week 2 - Day 4 Ablation Study Setup
+
+## Objective
+To design experiments for evaluating the contribution of contextual features in machine failure prediction.
+
+## Experiments Defined
+
+### Experiment A - Baseline Model
+Features Used:
+- Air Temperature
+- Process Temperature
+- Rotational Speed (RPM)
+- Torque
+- Tool Wear
+
+Purpose:
+- Establish baseline predictive performance using only sensor data.
+
+### Experiment B - Context-Aware Model
+Features Used:
+- Air Temperature
+- Process Temperature
+- Rotational Speed (RPM)
+- Torque
+- Tool Wear
+- Machine Type (Context Feature)
+
+Purpose:
+- Evaluate the impact of contextual information on prediction performance.
+
+## Dataset Preparation
+- Created baseline dataset using sensor features only.
+- Created context dataset using sensor and context features.
+- Encoded categorical context variables where required.
+- Prepared datasets for future model training and evaluation.
+
+## Evaluation Metrics Planned
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- ROC-AUC
+
+## Findings
+- Baseline dataset represents traditional predictive maintenance data.
+- Context dataset incorporates additional operational information.
+- Recall and F1 Score are important due to class imbalance.
+- Context features are expected to improve failure detection performance.
+- Ablation study will quantify the contribution of contextual variables.
+
