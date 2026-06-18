@@ -20,3 +20,10 @@
 4. Improvement of 0.014 proves engineered features help prediction.
 5. Added StandardScaler to fix convergence warning.
 6. fit_transform on train data, transform on test data to avoid data leakage.
+
+## Day 4 - Timestamp Based Data Fusion
+1. Added simulated timestamp column using pd.date_range.
+2. Each row gets one timestamp - one reading per minute.
+3. Time range covers 2024-01-01 08:00 to 2024-01-08 06:39.
+4. Merged internal sensor data with external context based on timestamps.
+5. Final dataset has 16 columns - 10 original + 6 new features.
