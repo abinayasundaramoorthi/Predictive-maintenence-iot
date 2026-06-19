@@ -102,3 +102,26 @@ Purpose:
 - Context features are expected to improve failure detection performance.
 - Ablation study will quantify the contribution of contextual variables.
 
+# Week 2 - Day 5 Ablation Study Results
+
+## Objective
+Compare the predictive performance of the Baseline and Context models to quantify the impact of contextual features.
+
+## Activities Completed
+- Trained Baseline Model
+- Trained Context Model
+- Generated predictions
+- Calculated evaluation metrics
+- Measured performance improvements
+- Created comparison visualizations
+- Analyzed confusion matrices
+- Generated final ablation report
+
+## Key Findings
+- Context features improved overall predictive performance.
+- Recall and F1 Score showed the most meaningful gains.
+- Confusion matrix analysis revealed improved failure detection.
+- Contextual information contributes useful predictive signals.
+
+## Conclusion
+The ablation study demonstrates that adding contextual variables improves machine failure prediction and supports their inclusion in future predictive maintenance models.
