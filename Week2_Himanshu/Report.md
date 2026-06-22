@@ -1,4 +1,4 @@
-# Day 1 External Context Research
+# External Context Research
 
 1. Research: Ambient Temperature Data
 
