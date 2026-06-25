@@ -23,3 +23,18 @@
 5. REMOVED 4 weak features: load_stress (0.088), wear_heat_ratio (0.074),
    speed_torque_ratio (0.063), temperature_gap (0.059).
 6. Finalized 12 features for LightGBM model (5 original sensors + 7 engineered).
+
+## Day 3 - LightGBM Development
+
+1. Installed and imported LightGBM library (version 4.6.0).
+2. Used 12 final features selected from Day 2.
+3. Applied stratified train-test split (80/20) - ensures equal 
+   failure distribution in both sets.
+4. Training set: 8000 rows, 271 failures.
+5. Testing set: 2000 rows, 68 failures.
+6. Trained LightGBM model with class_weight='balanced' to handle imbalance.
+7. LightGBM Macro F1 Score: 0.899
+8. Classification Report:
+   - Class 0 (no failure): F1 = 0.99
+   - Class 1 (failure): F1 = 0.81
+9. Compared with Week 2 Logistic Regression (0.693) - improvement of 0.206 (29.8% better!)
