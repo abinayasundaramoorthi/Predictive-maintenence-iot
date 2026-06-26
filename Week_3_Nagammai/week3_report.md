@@ -73,3 +73,24 @@
 - Pipeline prevented data leakage.
 - Performance remained stable across folds.
 - Workflow is ready for production-level experimentation.
+
+# Week 3 Day 5 Findings
+
+## Tasks Completed
+- Reviewed complete SMOTE workflow
+- Summarized balancing strategy
+- Compared original and balanced datasets
+- Reviewed cross-validation performance
+- Generated final validation report
+- Prepared GitHub commit commands
+- Completed Week 3 documentation
+
+## Key Findings
+- The original dataset showed a significant class imbalance.
+- SMOTE successfully balanced the minority class without modifying the test set.
+- Cross-validation provided consistent evaluation across multiple folds.
+- The integrated pipeline reduced the risk of data leakage and produced reliable performance metrics.
+- The dataset is now ready for advanced predictive maintenance model development.
+
+## Conclusion
+Week 3 successfully established a robust preprocessing and validation workflow by combining class imbalance analysis, SMOTE oversampling, validation, and cross-validation. The project is well-prepared for Week 4, which can focus on training and comparing multiple machine learning models using the balanced dataset.
