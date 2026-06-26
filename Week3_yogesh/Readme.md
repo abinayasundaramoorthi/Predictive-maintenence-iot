@@ -26,15 +26,25 @@
 
 ## Day 3 - LightGBM Development
 
-1. Installed and imported LightGBM library (version 4.6.0).
-2. Used 12 final features selected from Day 2.
-3. Applied stratified train-test split (80/20) - ensures equal 
+1. Used 12 final features selected from Day 2.
+2. Applied stratified train-test split (80/20) - ensures equal 
    failure distribution in both sets.
-4. Training set: 8000 rows, 271 failures.
-5. Testing set: 2000 rows, 68 failures.
-6. Trained LightGBM model with class_weight='balanced' to handle imbalance.
+3. Training set: 8000 rows, 271 failures.
+4. Testing set: 2000 rows, 68 failures.
+5. Applied StandardScaler to normalize all 12 features.
+6. Trained LightGBM model with:
+   - n_estimators=100 (100 decision trees)
+   - learning_rate=0.1
+   - class_weight='balanced' (handles 3.4% imbalance)
 7. LightGBM Macro F1 Score: 0.899
 8. Classification Report:
    - Class 0 (no failure): F1 = 0.99
    - Class 1 (failure): F1 = 0.81
-9. Compared with Week 2 Logistic Regression (0.693) - improvement of 0.206 (29.8% better!)
+9. Feature Importance results:
+   - Most important: Rotational speed (392)
+   - Best engineered feature: power (380)
+   - Least important: wear_per_rotation (0)
+10. Compared with Week 2 Logistic Regression (0.693) - 
+    improvement of 0.206 (29.8% better!)
+11. Model saved as lightgbm_model.pkl
+12. Predictions saved as predictions.csv
