@@ -1,14 +1,14 @@
 
-AI4I PREDICTIVE MAINTENANCE DATASET - DOCUMENTATION
+## AI4I PREDICTIVE MAINTENANCE DATASET - DOCUMENTATION
 
 
-1. DATA DICTIONARY
+**1. DATA DICTIONARY**
 
 Dataset Name  : AI4I 2004 Predictive Maintenance Dataset
 Total Rows    : 10000
 Total Columns : 14
 
-2. COLUMN DESCRIPTIONS
+**2. COLUMN DESCRIPTIONS**
 
 1. UDI
    - Unique identifier for each machine record
@@ -51,7 +51,7 @@ Total Columns : 14
    - Total Normal : 9661
    - Total Failed : 339
 
-3. FAILURE TYPE DESCRIPTIONS
+**3. FAILURE TYPE DESCRIPTIONS**
 
 TWF - Tool Wear Failure
    - Happens when tool is used beyond its limit
@@ -73,7 +73,7 @@ RNF - Random Failure
    - Unexpected random failure
    - Total Cases: 19
 
-4. BUSINESS NOTES
+**4. BUSINESS NOTES**
 
 - Machine failures are RARE (highly imbalanced dataset)
 - Early failure prediction can save huge maintenance costs
