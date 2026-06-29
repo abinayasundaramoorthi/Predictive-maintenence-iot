@@ -92,5 +92,3 @@
 - The integrated pipeline reduced the risk of data leakage and produced reliable performance metrics.
 - The dataset is now ready for advanced predictive maintenance model development.
 
-## Conclusion
-Week 3 successfully established a robust preprocessing and validation workflow by combining class imbalance analysis, SMOTE oversampling, validation, and cross-validation. The project is well-prepared for Week 4, which can focus on training and comparing multiple machine learning models using the balanced dataset.

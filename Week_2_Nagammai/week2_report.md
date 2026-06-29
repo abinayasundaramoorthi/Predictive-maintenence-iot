@@ -123,5 +123,3 @@ Compare the predictive performance of the Baseline and Context models to quantif
 - Confusion matrix analysis revealed improved failure detection.
 - Contextual information contributes useful predictive signals.
 
-## Conclusion
-The ablation study demonstrates that adding contextual variables improves machine failure prediction and supports their inclusion in future predictive maintenance models.
