@@ -7,7 +7,6 @@
 
 | Role | Name |
 |---|---|
-| **Team Leader** | Abinaya S |
 | Member 1 | Himanshu Rawat |
 | Member 2 | N. Yogeshwaran |
 | Member 3 | Nagammai Subramaniyan |
