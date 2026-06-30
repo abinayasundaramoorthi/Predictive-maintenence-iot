@@ -48,3 +48,52 @@
     improvement of 0.206 (29.8% better!)
 11. Model saved as lightgbm_model.pkl
 12. Predictions saved as predictions.csv
+
+## Day 4 - Feature Importance & Explainability
+
+1. Recreated all 12 selected features from Day 2.
+2. Retrained LightGBM model - confirmed Macro F1: 0.899.
+3. Task 1 - Feature Importance Ranking:
+   - Most important: Rotational speed (392)
+   - 2nd: power (380)
+   - 3rd: Torque (352)
+   - 4th: Tool wear (312)
+   - Least important: wear_per_rotation (0)
+4. Task 2 - SHAP Analysis:
+   - Used TreeExplainer to explain model predictions
+   - SHAP summary plot saved as shap_summary.png
+   - Shows which features push prediction towards failure or no failure
+5. Task 3 - Fusion Feature Impact:
+   - Original sensors importance: 1559 (52.0%)
+   - Engineered features importance: 1441 (48.0%)
+   - Engineered features contribute 48% of model decisions!
+6. Task 4 - Business Interpretation:
+   - Top 3 failure indicators: Rotational speed, Power, Torque
+   - High power = machine overloaded = failure risk
+   - Unusual speed/torque = machine struggling = failure risk
+   - LightGBM achieves 0.899 Macro F1 - production ready!
+7. Feature importance chart saved as feature_importance.png
+
+   ## Day 5 - Feature Engineering + LightGBM Final Report
+
+1. Feature Selection Summary:
+   - Total original columns: 10
+   - Total engineered features created: 11
+   - Features removed (weak): 4
+   - Final features selected: 12
+
+2. Feature Importance Report:
+   - Most important: Rotational speed (392)
+   - 2nd: power (380)
+   - 3rd: Torque (352)
+   - Least important: wear_per_rotation (0)
+
+3. Final Model Performance:
+   - LightGBM Macro F1: 0.899
+   - Logistic Regression (Week 2): 0.693
+   - Improvement: 0.206 (29.8% better!)
+
+4. Key Insights:
+   - Engineered features contribute 48% of model decisions
+   - LightGBM is production ready with 0.899 Macro F1
+
