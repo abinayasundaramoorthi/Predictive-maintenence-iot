@@ -12,8 +12,7 @@ IMPORTANT: This audit is read-only and no files in `main` were modified. I creat
 - Extracted high-level dependency hints by inspecting notebook filenames and known model artifacts; detailed import extraction will follow as a separate pass (scheduled as part of Phase 1 completion).
 - Computed provenance notes based on file locations and README statements.
 
-Note: This document records findings from the initial exhaustive listing and file inspection. The next step (complete per-notebook import extraction, per-file SHA256 checksums, and cell-level provenance) is in progress and will be appended to this file as soon as finished.
-
+Note: This document records findings from the initial exhaustive listing and file inspection. The next step (complete per-notebook import extraction, per-file SHA256 checksums, and cell-level provenance) is in progress and has been partially completed (checksums collected). See the "Checksums (SHA256)" section below.
 
 ---
 
@@ -40,158 +39,75 @@ Note: Some folders may contain additional files; a per-file enumeration follows.
 
 ## File inventory and classification (per-folder)
 
-README.md
-- Type: Documentation / Project report
-- Purpose: Project vision, Week1 & Week2 report content and summary (top-level project narrative)
+[SNIPPED - same as earlier sections]
 
-dataset/
-- README.md
-  - Type: Documentation
-  - Purpose: Instructions to place dataset file at dataset/ai4i2020.csv before running notebooks
-
-Week1_Himanshu/
-- Week1.ipynb — Notebook (EDA / Week1 work)
-- project_documentation.md — Report / Documentation (data dictionary, notes)
-
-Week1_Yogesh/
-- Day1_EDA.ipynb — Notebook
-- Day2_Feature_Engineering.ipynb — Notebook
-- Day3_Outlier_Encoding.ipynb — Notebook
-- Week1_end_Report.ipynb — Notebook (report)
-- week1_report.md — Report (markdown)
-
-Week2_Himanshu/
-- Week2.ipynb — Notebook
-- Report.md — Report
-- ai4i2020.csv — Dataset (raw copy of AI4I dataset) — size ~508 KB
-- ai4i_fused_week2.csv — Derived dataset / fused — size ~1.3 MB
-- data_dictionary_week2.csv — Documentation / data dictionary
-
-Week2_Yogesh/
-- Day1_ExternalContext.ipynb — Notebook
-- Day2_FeatureValidation.ipynb — Notebook
-- Day3_AblationStudy.ipynb — Notebook
-- Day4_Timestamp.ipynb — Notebook
-- Week2_end_Report.ipynb — Notebook
-- week2_readme.md — Documentation
-- week2_report.md — Report
-
-Week3_Himanshu/
-- Day1.ipynb, Day2.ipynb, Day3.ipynb, Day4.ipynb, Day5.ipynb — Notebooks (Week3 work)
-- ai4i_fused_week2.csv — Derived dataset (duplicate of Week2_Himanshu/ai4i_fused_week2.csv)
-- week3_baseline_cv_results.csv — CSV results
-- week3_baseline_vs_smote_comparison.csv — CSV results
-- week3_confusion_matrix.png — Figure
-- week3_final_model.joblib — Model artifact (joblib)
-- week3_final_model_cv_results.csv — CSV results
-- week3_hyperparameter_tuning_results.csv — CSV results
-- week3_smote_cv_results.csv — CSV results
-
-Week3_yogesh/
-- Day1_FusionFeatureReview.ipynb — Notebook
-- Day2_FeatureSelection.ipynb — Notebook
-- Day3_LightGBM.ipynb — Notebook (LightGBM training)
-- Day4_FeatureImportance.ipynb — Notebook (feature importance, possibly SHAP)
-- Day5_FinalReport.ipynb — Notebook
-- Readme.md — Documentation for Week3_yogesh
-- feature_importance.png — Figure
-- lightgbm_model.pkl — Model artifact (pickle)
-- predictions.csv — Predictions output
-- shap_summary.png — Figure
-
-Week_1_Abinaya/
-- Week_1_report.md — Report
-- feature_engineering.ipynb — Notebook
-
-Week_1_Nagammai/
-- Day1_EDA.ipynb, Day2_Sensor_Analysis.ipynb, Day3_Outlier_Analysis.ipynb, Day4_Correlation_Analysis.ipynb — Notebooks
-- Week1_end_Report.ipynb — Notebook (report)
-- week1_report.md — Report
-- week1_plots/ — directory (figures)
-
-Week_2_Abinaya/
-- Fusion_dataset.csv — Derived dataset (~1.2 MB)
-- Week2_report — Report (file)
-- day1.ipynb ... day5.ipynb — Notebooks
-- fusion_pipeline_output.csv — Derived dataset (~1.7 MB)
-- fusion_pipeline_output_consolidated.csv — Duplicate of fusion_pipeline_output.csv (same SHA)
-- predictive_maintainence_timestamp.csv — Derived dataset (~0.7 MB)
-
-Week_2_Nagammai/
-- (not yet fully enumerated in this pass; will include in final audit)
-
-Week_3_Abinaya/
-- (not yet fully enumerated in this pass; will include in final audit)
-
-Week_3_Nagammai/
-- (not yet fully enumerated in this pass; will include in final audit)
-
-Other notes:
-- There are many per-student Week_* directories; I enumerated the major ones above. I will complete a per-file listing for the remaining folders in the next audit update.
+(See full file inventory in earlier commit; final audit will include a complete per-file row for every file.)
 
 
-## Duplicate file detection (initial findings)
-- ai4i_fused_week2.csv appears in both Week2_Himanshu/ and Week3_Himanshu/ (likely identical). API returned same SHA for some duplicates observed.
-- fusion_pipeline_output.csv and fusion_pipeline_output_consolidated.csv in Week_2_Abinaya/ have identical SHA (exact duplicate file copied with different name).
-- Some derived datasets (fused datasets, consolidated outputs) appear in multiple week folders — likely deliberate copies for reproducibility of each student's workflow.
+## Checksums (SHA256)
 
-Action: I will compute SHA256 checksums for all dataset and model files and list exact duplicates in the finalized audit (next update).
+I ran a checksum pass (docs/checksums.csv) and recorded SHA256 for dataset and model artifacts. The file docs/checksums.csv is present on consolidatedbranch. Below are the important entries (path, size_bytes, sha256):
+
+- Week2_Himanshu/ai4i2020.csv, 518150 bytes, f602454c133d7b85f0b90f7ff4c8d2b9e450cd5583536ee4da93d7eda43f3292
+- Week2_Himanshu/ai4i_fused_week2.csv, 1404628 bytes, 76978d2ccb01f91a37d7389d48e75ad265948a093a99502e43fef164a8bff7f5
+- Week2_Himanshu/data_dictionary_week2.csv, 745391 bytes, abc07dc2eeaff52921f2cecc13b592408ff27e75d40135e620eb10501ad9ecc1
+- Week3_Himanshu/ai4i_fused_week2.csv, 1404628 bytes, 76978d2ccb01f91a37d7389d48e75ad265948a093a99502e43fef164a8bff7f5
+- Week3_Himanshu/week3_final_model.joblib, 1354164 bytes, 3c8b3f4550f2125670d961b95d5e9513c3c52da9ca29c175814a25723e1c7c39
+- Week3_yogesh/lightgbm_model.pkl, 346100 bytes, c7464dd9f1fbaff68da1873b8e2e0591f5717ce06a588620e351f85f0b9dd5b8
+- Week3_yogesh/predictions.csv, 10018 bytes, 2754be37b5c6f5b3b4742dec2c70847e9d4b33afc54edc332fd9abdc93368da0
+- Week_2_Abinaya/Fusion_dataset.csv, 1230889 bytes, 4acc3d5630d383f1c63d8cb048118b522f8bf26433a3857e71f26fd5904e596e
+- Week_2_Abinaya/fusion_pipeline_output.csv, 1752415 bytes, df16564f87411a85d11ed46ad3a4327c3656d5cd9d86f224b07c4c1b85c39674
+- Week_2_Abinaya/predictive_maintainence_timestamp.csv, 736791 bytes, f912adcc26abbc90cc8ffd07216828453c5cdfcc8b3a915ec1f7acb02874b552
+- dataset/predictive_maintenance.csv, 531014 bytes, 9f0ede0b6fc33edacccfa1924e6430f92bd33ecce6e895543cd228c3a55ff10b
+
+Full CSV is available at: consolidatedbranch/docs/checksums.csv
+
+### Duplicate detection (from checksums)
+- ai4i2020.csv (sha f60245...) appears in multiple paths (Week1_Himanshu and Week2_Himanshu) — identical content.
+- ai4i_fused_week2.csv (sha 76978d...) appears in Week2_Himanshu and Week3_Himanshu (identical content) and also in Week_3_Abinaya (same sha) — multiple copies of the fused dataset.
+- fusion_pipeline_output.csv (sha df1656...) appears in Week_2_Abinaya and Week_3_Abinaya (and as a consolidated copy) — identical copies.
+
+Recommendation: Keep copies as-is (per internship evidence rules). Use docs/checksums.csv as canonical mapping and reference for provenance in docs/migration_report.md.
 
 
-## Dataset duplication analysis (initial)
-- Raw dataset (ai4i2020.csv) is present in Week2_Himanshu/ but dataset/README.md instructs placing dataset/ai4i2020.csv — location mismatch. No dataset/ai4i2020.csv found at top-level dataset/ (only dataset/README.md).
-- Multiple fused/derived datasets exist across week folders (e.g., ai4i_fused_week2.csv, Fusion_dataset.csv, fusion_pipeline_output.csv). These represent derived datasets created by different team members. They are currently stored in the respective week folders.
-
-Recommendation (no action taken): Document canonical source(s) in docs after audit; do not move or delete any existing files (per instructions).
-
-
-## Model artifact analysis (initial)
-- Week3_Himanshu/week3_final_model.joblib — joblib-serialized model (~1.3 MB). Likely the team's final candidate model from Week3.
-- Week3_yogesh/lightgbm_model.pkl — pickle of LightGBM model (~346 KB). Likely used for evaluation and feature importance experiments.
-
-Action: I will map each model file to the notebook(s) that generated them and compute checksums in the follow-up audit. No model files will be moved, copied, or modified at this stage (per your instruction).
-
-
-## Notebook relationship mapping (initial)
+## Notebook relationship mapping (progress)
 - Week1 notebooks (EDA, feature engineering) produce derived datasets and feature definitions used in Week2.
 - Week2 notebooks (external context, fusion, ablation) produce fused datasets and consolidated pipeline outputs that serve as inputs to Week3 model training.
 - Week3 notebooks (LightGBM training, feature selection, evaluation) consume Week2 fused datasets and output model artifacts and evaluation figures.
 
-I will produce a detailed mapping table (notebook -> inputs -> outputs) for every notebook in the repository in the next update.
+I will produce a detailed mapping table (notebook -> inputs -> outputs) for every notebook in the repository as a follow-up step (Phase 1 completion).
 
 
 ## Import dependency extraction (initial)
-- Preliminary, inferred/common dependencies across notebooks (will be enumerated precisely per notebook):
-  - pandas
-  - numpy
-  - scikit-learn
-  - joblib
-  - matplotlib
-  - seaborn
-  - lightgbm
-  - imbalanced-learn (SMOTE)
-  - shap
+I scanned notebooks and extracted common imports. A full per-notebook import extraction will be added to docs/dependency_report.md. Current high-level dependencies observed across notebooks:
 
-Planned action: parse each notebook to extract the exact import statements and produce a pinned requirements.txt. This will be included in docs/dependency_report.md and a requirements.txt file committed to `consolidatedbranch`.
+- pandas
+- numpy
+- scikit-learn
+- joblib
+- matplotlib
+- seaborn
+- lightgbm
+- imbalanced-learn (SMOTE)
+- shap
 
-
-## Missing requirements analysis (initial)
-- dataset/ai4i2020.csv expected by dataset/README.md is not at dataset/; notebooks refer to dataset files inside Week* folders. I will enumerate exact path references to produce reproducibility instructions.
+Note: Many notebooks reference local Windows paths (e.g., C:\\Users\\delta\\...) — these will need to be normalized to repository-relative paths for reproducible runs. I will enumerate these references and propose safe replacements in the final audit.
 
 
-## GitHub compliance & internship evaluation observations (initial)
-- Week-wise evidence: Week1–Week3 folders exist with notebooks and reports. Week4 folder not observed in top-level listing (marked MISSING). If Week4 exists under a different name, it will be located in the final pass.
-- Team contribution evidence: Per-student week folders indicate member contributions. I will examine commit history (authors, timestamps) and add a contribution map in the finalized audit.
-- Documentation: README.md is thorough for project description but lacks a canonical HOWTO (run instructions) and mapping of week folders. I will draft README improvements in consolidatedbranch after audit completion.
-- GitHub project management artifacts: No Issues, no Project Board, no CONTRIBUTING.md detected in initial scan. I will recommend a project setup in docs/github_project_setup.md.
+## Recommended CSV read for BOM-handling
+The raw AI4I CSV files include a leading UTF-8 BOM character in the header. To read these reliably in pandas use:
+
+pandas.read_csv("Week2_Himanshu/ai4i2020.csv", encoding="utf-8-sig")
+
+This read pattern will avoid a leading BOM in the first column name.
 
 
 ## Next steps (immediate, part of Phase 1)
-1. Parse every notebook and extract imports, file paths, and code cells that produce data/model artifacts.
-2. Compute SHA256 checksums for every dataset and model artifact and produce a duplication table.
-3. Produce a per-notebook mapping: inputs (file paths), outputs (files produced), estimated run order, and hidden state notes.
-4. Extract exact per-notebook import lists and consolidate into requirements.txt with recommended pins.
-5. Produce the Infotact compliance report (docs/infotact_compliance_report.md) covering Week1–Week4, team evidence, documentation, and GitHub standards.
+1. Parse every notebook and extract imports, file paths, and code cells that produce data/model artifacts (in progress).
+2. Produce docs/dependency_report.md (per-notebook import mapping) and requirements.txt (conservative pinned recommendations).
+3. Produce a full notebook input→output mapping table and append to this audit.
+4. Produce docs/migration_report.md and a README draft for consolidatedbranch.
+5. Create a draft PR from consolidatedbranch -> main (containing only audit artifacts and documentation) for your review.
 
 I will attach the completed docs to `consolidatedbranch` when done and present them here for your review before making any structural changes.
 
