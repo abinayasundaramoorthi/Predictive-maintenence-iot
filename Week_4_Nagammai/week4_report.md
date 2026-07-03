@@ -64,3 +64,18 @@
 - The balanced threshold provides an effective compromise between Precision and Recall.
 - Different operational environments may require different threshold strategies.
 
+# Week 4 Day 5 Findings
+
+## Results
+- SMOTE effectively balanced the minority class and improved model learning.
+- Precision-Recall analysis provided a more reliable evaluation than accuracy for the imbalanced dataset.
+- Threshold optimization identified a balanced operating point with improved Precision and Recall.
+- The selected threshold minimized the trade-off between missed failures and false alarms.
+- The model demonstrated consistent performance across validation experiments.
+
+## Final Findings
+- Class imbalance was one of the major challenges in the dataset and was successfully addressed using SMOTE.
+- Probability-based evaluation improved understanding of prediction confidence.
+- Precision-Recall analysis enabled informed threshold selection.
+- The optimized threshold is suitable for predictive maintenance scenarios where both reliability and early failure detection are important.
+- The developed workflow provides a strong foundation for future IoT-based predictive maintenance systems.
