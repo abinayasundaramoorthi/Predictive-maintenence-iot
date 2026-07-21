@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Predictive Maintenance{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Predictive Maintenance Dashboard</h1>
+  <p class="page-subtitle">AI Powered Industrial Equipment Health Monitoring</p>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card stat-blue">
+    <div class="stat-label">Total Predictions</div>
+    <div class="stat-value" id="stat-total">{{ stats.total_predictions }}</div>
+    <div class="stat-icon">▣</div>
+  </div>
+  <div class="stat-card stat-green">
+    <div class="stat-label">Healthy Machines</div>
+    <div class="stat-value" id="stat-healthy">{{ stats.healthy_machines }}</div>
+    <div class="stat-icon">✓</div>
+  </div>
+  <div class="stat-card stat-red">
+    <div class="stat-label">Failure Predictions</div>
+    <div class="stat-value" id="stat-failures">{{ stats.failure_predictions }}</div>
+    <div class="stat-icon">⚠</div>
+  </div>
+  <div class="stat-card stat-cyan">
+    <div class="stat-label">Model Accuracy</div>
+    <div class="stat-value" id="stat-accuracy">{{ stats.model_accuracy if stats.model_accuracy is not none else "—" }}%</div>
+    <div class="stat-icon">◈</div>
+  </div>
+  <div class="stat-card stat-yellow">
+    <div class="stat-label">Avg. Health Score</div>
+    <div class="stat-value" id="stat-health">{{ stats.avg_health_score }}</div>
+    <div class="stat-icon">♥</div>
+  </div>
+</div>
+
+<div class="grid-2" style="margin-bottom: 24px;">
+  <div class="card">
+    <div class="section-label">Get Started</div>
+    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin-top: 0;">
+      Run a live prediction against the trained LightGBM model using real or sample machine telemetry.
+      The dashboard fuses internal sensor readings with external context (ambient temperature, plant load)
+      exactly as the model was trained.
+    </p>
+    <a href="{{ url_for('prediction_page') }}" class="btn btn-primary">Go to Prediction Console →</a>
+  </div>
+  <div class="card">
+    <div class="section-label">System Status</div>
+    <div style="display:flex; flex-direction:column; gap:10px; font-size:13.5px; color: var(--text-secondary);">
+      <div>Model: <strong style="color: var(--text-primary);">LightGBM Classifier</strong></div>
+      <div>Dataset: <strong style="color: var(--text-primary);">AI4I 2020 (Contextually Fused)</strong></div>
+      <div>Status: <span class="badge badge-green">Online</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-label">Recent Predictions</div>
+  {% if recent %}
+  <div style="overflow-x:auto;">
+  <table class="report-table">
+    <thead>
+      <tr>
+        <th>Machine ID</th><th>Status</th><th>Health Score</th><th>Confidence</th><th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in recent %}
+      <tr>
+        <td>{{ r.machine_id }}</td>
+        <td><span class="badge {{ 'badge-red' if r.is_failure else 'badge-green' }}">{{ r.status }}</span></td>
+        <td>{{ r.health_score }}</td>
+        <td>{{ r.confidence }}%</td>
+        <td>{{ r.timestamp }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">▣</div>
+    No predictions yet. Head to the Prediction Console to analyze your first machine.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

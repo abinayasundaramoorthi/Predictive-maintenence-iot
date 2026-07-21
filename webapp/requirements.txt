@@ -1,0 +1,6 @@
+# Additional dependencies required ONLY by webapp/ (on top of the
+# existing project's requirements.txt, which already provides
+# pandas, numpy, scikit-learn, lightgbm, and joblib).
+
+flask>=3.0
+shap>=0.44

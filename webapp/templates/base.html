@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Predictive Maintenance Dashboard{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="30" height="30">
+          <circle cx="20" cy="20" r="17" fill="none" stroke="var(--accent-blue)" stroke-width="3"/>
+          <path d="M20 8 L20 20 L28 26" stroke="var(--accent-green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-title">PMD<span>System</span></div>
+        <div class="brand-sub">Industrial AI Monitor</div>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="{{ url_for('dashboard') }}" class="nav-link {{ 'active' if active_page == 'dashboard' }}">
+        <span class="nav-icon">▣</span> Dashboard
+      </a>
+      <a href="{{ url_for('prediction_page') }}" class="nav-link {{ 'active' if active_page == 'prediction' }}">
+        <span class="nav-icon">⚙</span> Prediction
+      </a>
+      <a href="{{ url_for('reports_page') }}" class="nav-link {{ 'active' if active_page == 'reports' }}">
+        <span class="nav-icon">▤</span> Reports
+      </a>
+      <a href="{{ url_for('model_info_page') }}" class="nav-link {{ 'active' if active_page == 'model-info' }}">
+        <span class="nav-icon">◈</span> Model Information
+      </a>
+      <a href="{{ url_for('about_page') }}" class="nav-link {{ 'active' if active_page == 'about' }}">
+        <span class="nav-icon">ℹ</span> About
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="status-dot"></div>
+      <span>Model Online</span>
+    </div>
+  </aside>
+
+  <!-- Mobile top bar -->
+  <div class="mobile-topbar">
+    <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    <span class="mobile-title">Predictive Maintenance</span>
+  </div>
+
+  <!-- Main content -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+
+    <footer class="app-footer">
+      <span>Predictive Maintenance Dashboard</span>
+      <span class="dot-sep">•</span>
+      <span>v{{ app_version|default('1.1.0') }}</span>
+    </footer>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

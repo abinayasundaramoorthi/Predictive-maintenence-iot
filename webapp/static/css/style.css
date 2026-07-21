@@ -1,0 +1,692 @@
+/* =====================================================================
+   Predictive Maintenance Dashboard — Design Tokens
+   Theme: Industrial control-room instrumentation
+   (Siemens / Bosch / GE / Honeywell inspired)
+   ===================================================================== */
+
+:root {
+  /* Base surfaces */
+  --bg-deep: #0B1220;
+  --bg-panel: #111A2C;
+  --bg-panel-alt: #0E1727;
+  --glass-fill: rgba(255, 255, 255, 0.045);
+  --glass-fill-strong: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.09);
+
+  /* Accents */
+  --accent-blue: #3B82F6;
+  --accent-blue-soft: #60A5FA;
+  --accent-cyan: #22D3EE;
+  --accent-green: #22C55E;
+  --accent-green-light: #86EFAC;
+  --accent-yellow: #F5B825;
+  --accent-orange: #F97316;
+  --accent-red: #EF4444;
+  --accent-grey: #64748B;
+
+  /* Text */
+  --text-primary: #E6ECF5;
+  --text-secondary: #93A1B7;
+  --text-muted: #5C6B85;
+
+  /* Type */
+  --font-display: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at 15% 0%, #12203a 0%, var(--bg-deep) 45%);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  min-height: 100vh;
+  /* Safety net: no content should ever be able to widen the page itself.
+     Only inner containers (like .excel-wrapper) are allowed to scroll
+     horizontally — see min-width: 0 on .main-content below for why this
+     was happening. */
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------------------------------------------------------------------
+   App shell / layout
+   --------------------------------------------------------------------- */
+.app-shell {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, #0E1727 0%, #0A1220 100%);
+  border-right: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 26px 8px;
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 18px;
+}
+
+.brand-mark {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--glass-fill);
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+}
+
+.brand-title { font-weight: 700; font-size: 15px; letter-spacing: 0.3px; }
+.brand-title span { color: var(--accent-cyan); }
+.brand-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.nav-links { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+
+.nav-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav-link:hover { background: var(--glass-fill); color: var(--text-primary); }
+.nav-link.active {
+  background: linear-gradient(90deg, rgba(59,130,246,0.18), rgba(34,211,238,0.06));
+  color: var(--accent-blue-soft);
+  border: 1px solid rgba(59,130,246,0.25);
+}
+.nav-icon { font-size: 15px; width: 18px; text-align: center; opacity: 0.9; }
+
+.sidebar-footer {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--glass-border);
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.mobile-topbar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--glass-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.menu-toggle {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.mobile-title { font-weight: 600; font-size: 14px; }
+
+.main-content {
+  padding: 32px 40px 20px 40px;
+  max-width: 1400px;
+  width: 100%;
+  min-width: 0; /* critical: without this, wide children (the prediction
+                   sheet) stretch this grid track — and the whole page —
+                   instead of scrolling inside .excel-wrapper */
+}
+
+.app-footer {
+  margin-top: 48px;
+  padding: 18px 4px;
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dot-sep { opacity: 0.5; }
+
+/* ---------------------------------------------------------------------
+   Page header
+   --------------------------------------------------------------------- */
+.page-header { margin-bottom: 28px; }
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: 0 0 6px 0;
+  background: linear-gradient(90deg, #ffffff, var(--accent-blue-soft));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.page-subtitle { color: var(--text-secondary); font-size: 14.5px; margin: 0; }
+
+/* ---------------------------------------------------------------------
+   Cards / glass panels
+   --------------------------------------------------------------------- */
+.card {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  padding: 22px;
+  box-shadow: var(--shadow-soft);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.stat-card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.4); }
+.stat-card .stat-label {
+  font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px;
+}
+.stat-card .stat-value {
+  font-family: var(--font-mono);
+  font-size: 28px; font-weight: 600; margin-top: 6px;
+}
+.stat-card .stat-icon {
+  position: absolute; right: 14px; top: 14px; font-size: 20px; opacity: 0.35;
+}
+.stat-blue .stat-value { color: var(--accent-blue-soft); }
+.stat-green .stat-value { color: var(--accent-green); }
+.stat-red .stat-value { color: var(--accent-red); }
+.stat-cyan .stat-value { color: var(--accent-cyan); }
+.stat-yellow .stat-value { color: var(--accent-yellow); }
+
+@media (max-width: 1150px) { .stat-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 20px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  color: #04101F;
+  box-shadow: 0 6px 18px rgba(59,130,246,0.35);
+}
+.btn-primary:hover { box-shadow: 0 8px 22px rgba(59,130,246,0.5); }
+
+.btn-outline {
+  background: var(--glass-fill);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+.btn-outline:hover { background: var(--glass-fill-strong); }
+
+.btn-success {
+  background: linear-gradient(135deg, var(--accent-green), #4ADE80);
+  color: #062713;
+}
+.btn-danger {
+  background: linear-gradient(135deg, var(--accent-red), #F87171);
+  color: #2A0808;
+}
+.btn-sm { padding: 7px 12px; font-size: 12.5px; border-radius: 8px; }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.toolbar-spacer { flex: 1; }
+.threshold-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.threshold-control input {
+  width: 70px;
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+.threshold-control input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue);
+}
+
+/* ---------------------------------------------------------------------
+   "Add Sample" dropdown — replaces three permanently-visible buttons
+   (Healthy / Failure / Random) with a single toolbar control so the
+   toolbar reads as a handful of clear actions instead of a wall of
+   buttons.
+   --------------------------------------------------------------------- */
+.dropdown { position: relative; }
+.dropdown-toggle .caret { font-size: 10px; margin-left: 2px; opacity: 0.8; transition: transform 0.15s ease; }
+.dropdown.open .dropdown-toggle .caret { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 190px;
+  background: var(--bg-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: 6px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 30;
+}
+.dropdown.open .dropdown-menu { display: flex; animation: fadeSlideIn 0.15s ease; }
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.dropdown-item:hover { background: var(--glass-fill-strong); }
+.dropdown-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dropdown-dot.dot-green { background: var(--accent-green); box-shadow: 0 0 6px rgba(34,197,94,0.6); }
+.dropdown-dot.dot-red { background: var(--accent-red); box-shadow: 0 0 6px rgba(239,68,68,0.6); }
+.dropdown-dot.dot-blue { background: var(--accent-blue); box-shadow: 0 0 6px rgba(59,130,246,0.6); }
+
+/* ---------------------------------------------------------------------
+   Excel-like input table
+   --------------------------------------------------------------------- */
+.excel-wrapper {
+  overflow: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  max-height: 62vh;
+}
+table.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 1580px;
+}
+table.excel-table thead th {
+  background: var(--bg-panel-alt);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--glass-border);
+  border-right: 1px solid rgba(255,255,255,0.04);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+table.excel-table th.col-rownum,
+table.excel-table td.row-num-cell {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background: var(--bg-panel-alt);
+}
+table.excel-table td.row-num-cell {
+  z-index: 3;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  width: 42px;
+  min-width: 42px;
+  background: var(--bg-deep) !important;
+}
+table.excel-table thead th.col-rownum { width: 42px; min-width: 42px; text-align: center; z-index: 6; }
+table.excel-table tbody tr:hover td.row-num-cell { background: #101a2e; }
+table.excel-table tbody td {
+  padding: 0;
+  border-right: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+table.excel-table tbody tr:hover { background: rgba(59,130,246,0.05); }
+table.excel-table input, table.excel-table select {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  padding: 10px 10px;
+  outline: none;
+}
+table.excel-table input:focus, table.excel-table select:focus {
+  background: rgba(59,130,246,0.12);
+  box-shadow: inset 0 0 0 1px var(--accent-blue);
+}
+table.excel-table select option { background: var(--bg-panel); }
+.row-remove-btn {
+  background: none; border: none; color: var(--accent-red);
+  cursor: pointer; font-size: 14px; padding: 8px;
+}
+
+/* ---------------------------------------------------------------------
+   Result panel
+   --------------------------------------------------------------------- */
+.result-card {
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  margin-bottom: 18px;
+  animation: fadeSlideIn 0.4s ease;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.status-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+.status-healthy { background: rgba(34,197,94,0.16); color: var(--accent-green-light); border: 1px solid rgba(34,197,94,0.4); }
+.status-failure { background: rgba(239,68,68,0.16); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.4); }
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.badge-green { background: rgba(34,197,94,0.15); color: var(--accent-green-light); }
+.badge-yellow { background: rgba(245,184,37,0.15); color: var(--accent-yellow); }
+.badge-orange { background: rgba(249,115,22,0.15); color: var(--accent-orange); }
+.badge-red { background: rgba(239,68,68,0.15); color: #FCA5A5; }
+.badge-grey { background: rgba(100,116,139,0.2); color: var(--text-secondary); }
+
+.gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.gauge-number { font-family: var(--font-mono); font-size: 22px; font-weight: 700; }
+.gauge-caption { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.progress-track {
+  width: 100%; height: 10px; border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.reco-list { margin: 10px 0 0 0; padding-left: 18px; color: var(--text-secondary); font-size: 13.5px; line-height: 1.9; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+.section-label {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--text-muted); margin-bottom: 10px; font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------
+   Reports table
+   --------------------------------------------------------------------- */
+table.report-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.report-table th {
+  text-align: left; padding: 12px; color: var(--text-muted);
+  text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--glass-border);
+}
+table.report-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+table.report-table tr:hover { background: rgba(59,130,246,0.05); }
+
+/* ---------------------------------------------------------------------
+   Loading overlay
+   --------------------------------------------------------------------- */
+.loading-overlay {
+  position: fixed; inset: 0;
+  background: rgba(6,10,20,0.75);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 200;
+}
+.loading-overlay.active { display: flex; }
+.loading-box {
+  text-align: center;
+  padding: 32px 40px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel);
+  border: 1px solid var(--glass-border);
+  min-width: 300px;
+}
+.spinner {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 3px solid rgba(59,130,246,0.2);
+  border-top-color: var(--accent-blue);
+  margin: 0 auto 18px auto;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-family: var(--font-mono); font-size: 13.5px; color: var(--text-secondary); min-height: 20px; }
+
+/* ---------------------------------------------------------------------
+   Utility / empty states
+   --------------------------------------------------------------------- */
+.empty-state {
+  text-align: center; padding: 50px 20px; color: var(--text-muted);
+}
+.empty-state .empty-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.6; }
+
+.hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+/* ---------------------------------------------------------------------
+   Responsive: collapse sidebar on small screens
+   --------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; left: -270px; top: 0; z-index: 100;
+    width: 250px; height: 100vh; transition: left 0.25s ease;
+    box-shadow: 8px 0 30px rgba(0,0,0,0.5);
+  }
+  .sidebar.open { left: 0; }
+  .mobile-topbar { display: flex; }
+  .main-content { padding: 22px 18px; }
+}
+
+@media print {
+  .sidebar, .mobile-topbar, .toolbar, .app-footer { display: none !important; }
+  body { background: white; color: black; }
+  .card, .result-card { border: 1px solid #ccc; background: white; box-shadow: none; }
+}
+
+/* ---------------------------------------------------------------------
+   Generate-rows control
+   --------------------------------------------------------------------- */
+.gen-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.gen-control select {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 8px 8px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  outline: none;
+}
+.gen-control select option { background: var(--bg-panel); }
+
+/* ---------------------------------------------------------------------
+   Global banner (non-blocking error/info notices)
+   --------------------------------------------------------------------- */
+.global-banner {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 18px;
+  border: 1px solid var(--glass-border);
+  animation: fadeSlideIn 0.3s ease;
+}
+.global-banner.banner-error {
+  background: rgba(239,68,68,0.1);
+  border-color: rgba(239,68,68,0.35);
+  color: #FCA5A5;
+}
+.global-banner.banner-info {
+  background: rgba(59,130,246,0.1);
+  border-color: rgba(59,130,246,0.35);
+  color: var(--accent-blue-soft);
+}
+
+/* ---------------------------------------------------------------------
+   In-sheet result columns
+   --------------------------------------------------------------------- */
+table.excel-table td.result-cell {
+  padding: 10px 10px !important;
+  font-size: 12px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.cell-dash { color: var(--text-muted); }
+
+.health-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.health-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+table.excel-table td.actions-cell { padding: 6px !important; }
+.actions-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.row-action-btn {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  width: 26px; height: 26px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.row-action-btn:hover { background: var(--glass-fill-strong); color: var(--text-primary); }
+.row-action-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.row-action-btn.row-remove-btn { color: var(--accent-red); }
+
+/* Row health-status coloring — applied to the whole <tr> once a row has
+   been predicted, so 5/10/20/50-row sheets can be scanned at a glance. */
+table.excel-table tbody tr.sheet-row.row-status-healthy td { background: rgba(34,197,94,0.055); }
+table.excel-table tbody tr.sheet-row.row-status-healthy td:first-child { box-shadow: inset 4px 0 0 var(--accent-green); }
+
+table.excel-table tbody tr.sheet-row.row-status-monitor td { background: rgba(245,184,37,0.06); }
+table.excel-table tbody tr.sheet-row.row-status-monitor td:first-child { box-shadow: inset 4px 0 0 var(--accent-yellow); }
+
+table.excel-table tbody tr.sheet-row.row-status-risk td { background: rgba(249,115,22,0.07); }
+table.excel-table tbody tr.sheet-row.row-status-risk td:first-child { box-shadow: inset 4px 0 0 var(--accent-orange); }
+
+table.excel-table tbody tr.sheet-row.row-status-critical td { background: rgba(239,68,68,0.08); }
+table.excel-table tbody tr.sheet-row.row-status-critical td:first-child { box-shadow: inset 4px 0 0 var(--accent-red); }
+
+table.excel-table tbody tr.sheet-row.row-status-error td { background: rgba(100,116,139,0.09); }
+table.excel-table tbody tr.sheet-row.row-status-error td:first-child { box-shadow: inset 4px 0 0 var(--accent-grey); }
+
+/* Inline, per-row explanation panel — appears directly under the row it
+   belongs to, in the same sheet, never in a separate disconnected list. */
+tr.detail-row.hidden { display: none; }
+tr.detail-row td {
+  background: rgba(255,255,255,0.02) !important;
+  padding: 20px 22px !important;
+  border-bottom: 1px solid var(--glass-border);
+  white-space: normal;
+}
+.detail-inner { animation: fadeSlideIn 0.3s ease; }

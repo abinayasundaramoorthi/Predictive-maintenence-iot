@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Reports — Predictive Maintenance{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Reports</h1>
+  <p class="page-subtitle">Full log of predictions made in this session.</p>
+</div>
+
+<div class="toolbar">
+  <a href="{{ url_for('export_csv') }}" class="btn btn-outline btn-sm">⬇ Download CSV</a>
+  <button class="btn btn-outline btn-sm" onclick="window.print()">🖨 Download PDF Report</button>
+</div>
+
+<div class="card">
+  {% if recent %}
+  <div style="overflow-x:auto;">
+  <table class="report-table">
+    <thead>
+      <tr>
+        <th>Machine ID</th><th>Status</th><th>Failure Prob.</th><th>Health Score</th>
+        <th>Confidence</th><th>Failure Mode</th><th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in recent %}
+      <tr>
+        <td>{{ r.machine_id }}</td>
+        <td><span class="badge {{ 'badge-red' if r.is_failure else 'badge-green' }}">{{ r.status }}</span></td>
+        <td>{{ r.failure_probability }}%</td>
+        <td>{{ r.health_score }}</td>
+        <td>{{ r.confidence }}%</td>
+        <td>{{ r.failure_mode.failure_type }}</td>
+        <td>{{ r.timestamp }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">▤</div>
+    No predictions logged yet this session.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Prediction Console — Predictive Maintenance{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Prediction Console</h1>
+  <p class="page-subtitle">Enter machine readings below, spreadsheet-style — predictions and explanations appear right in each row.</p>
+</div>
+
+<div class="toolbar">
+  <div class="dropdown" id="sample-dropdown">
+    <button type="button" class="btn btn-outline btn-sm dropdown-toggle" id="btn-sample-toggle">
+      + Add Sample <span class="caret">▾</span>
+    </button>
+    <div class="dropdown-menu" id="sample-menu">
+      <button type="button" class="dropdown-item" id="btn-sample-healthy">
+        <span class="dropdown-dot dot-green"></span> Healthy Sample
+      </button>
+      <button type="button" class="dropdown-item" id="btn-sample-failure">
+        <span class="dropdown-dot dot-red"></span> Failure Sample
+      </button>
+      <button type="button" class="dropdown-item" id="btn-sample-random">
+        <span class="dropdown-dot dot-blue"></span> Random Machine
+      </button>
+    </div>
+  </div>
+
+  <span class="gen-control">
+    <select id="generate-count" title="Number of rows to generate">
+      <option value="5">5</option>
+      <option value="10" selected>10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+    </select>
+    <button class="btn btn-outline btn-sm" id="btn-generate">Generate Rows</button>
+  </span>
+
+  <button class="btn btn-outline btn-sm" id="btn-clear">Clear All</button>
+
+  <span class="toolbar-spacer"></span>
+
+  <label class="threshold-control">
+    Threshold
+    <input type="number" id="threshold-input" value="0.50" min="0" max="1" step="0.01">
+  </label>
+  <button class="btn btn-primary" id="btn-predict">▶ Predict All</button>
+</div>
+
+<div id="global-banner" class="global-banner" style="display:none;"></div>
+
+<div class="card" style="margin-bottom: 10px; padding: 0;">
+  <div class="excel-wrapper">
+    <table class="excel-table" id="excel-table">
+      <thead>
+        <tr>
+          <th class="col-rownum">#</th>
+          <th>Machine ID</th>
+          <th>Type</th>
+          <th>Air Temp [K]</th>
+          <th>Process Temp [K]</th>
+          <th>Rot. Speed [rpm]</th>
+          <th>Torque [Nm]</th>
+          <th>Tool Wear [min]</th>
+          <th>Ambient [°C]</th>
+          <th>Load [%]</th>
+          <th>Shift</th>
+          <th>Status</th>
+          <th>Health</th>
+          <th>Failure Type</th>
+          <th>Confidence</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="excel-tbody">
+        <!-- rows injected by script.js -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<p class="hint" style="margin-bottom: 24px;">
+  "Shift" is recorded for your records only — the trained model uses sensor + ambient context columns only, exactly as it was trained.
+  Click <strong>▾</strong> on any predicted row to see its health gauge, SHAP explanation, and recommended action.
+</p>
+
+<template id="detail-template">
+  <div class="detail-inner">
+    <div class="grid-3" style="align-items:center;">
+      <div class="gauge-wrap">
+        <svg width="96" height="96" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+          <circle data-field="gauge-ring" cx="60" cy="60" r="50" fill="none" stroke="var(--accent-green)" stroke-width="10"
+                  stroke-linecap="round" transform="rotate(-90 60 60)"
+                  stroke-dasharray="314" stroke-dashoffset="314"/>
+          <text x="60" y="56" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" font-weight="700" fill="#E6ECF5" data-field="gauge-number">0</text>
+          <text x="60" y="76" text-anchor="middle" font-family="IBM Plex Sans" font-size="8" fill="#93A1B7">HEALTH SCORE</text>
+        </svg>
+      </div>
+      <div>
+        <div class="section-label">Failure Type &amp; Recommended Action</div>
+        <div data-field="failure-detail" class="hint" style="margin:0 0 10px 0; font-size:12.5px;"></div>
+        <ul class="reco-list" data-field="recommendations"></ul>
+      </div>
+      <div>
+        <div class="section-label">Top Contributing Factors (SHAP)</div>
+        <canvas data-field="shap-chart" height="150"></canvas>
+        <div class="hint" data-field="explain-method"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+{% endblock %}
+
+{% block scripts %}
+<script>window.__predictionPageInit && window.__predictionPageInit();</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Model Information — Predictive Maintenance{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Model Information</h1>
+  <p class="page-subtitle">Technical details of the deployed inference model.</p>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="section-label">Model</div>
+    <p style="margin:0 0 16px 0; font-family: var(--font-mono); font-size:15px;">{{ model_name }}</p>
+
+    <div class="section-label">Dataset</div>
+    <p style="margin:0 0 16px 0; font-size:14px; color:var(--text-secondary);">{{ dataset_name }}</p>
+
+    <div class="section-label">Held-out Test Accuracy</div>
+    <p style="margin:0; font-family: var(--font-mono); font-size:20px; color: var(--accent-cyan);">
+      {{ stats.model_accuracy if stats.model_accuracy is not none else "—" }}%
+    </p>
+    <p class="hint">Computed directly from data/processed/week4_X_test.csv + week4_y_test.csv at server startup.</p>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Model Features (in training order)</div>
+    <ol style="margin:0; padding-left: 20px; color: var(--text-secondary); font-size:13.5px; line-height:1.9; font-family: var(--font-mono);">
+      {% for f in feature_order %}
+      <li>{{ f }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+
+<div class="card" style="margin-top:24px;">
+  <div class="section-label">Explainability Methodology</div>
+  <p style="color: var(--text-secondary); font-size: 14px; line-height:1.8; margin:0;">
+    Per-prediction explanations are generated using <strong>SHAP TreeExplainer</strong> when available,
+    which computes each feature's exact contribution to that specific prediction. If SHAP is not
+    installed, the dashboard falls back to the model's own global <code>feature_importances_</code>,
+    signed by whether the input value sits above or below the training set's median for that feature.
+    The fallback is clearly labeled as an approximation, never presented as a true SHAP value.
+  </p>
+</div>
+
+<div class="card" style="margin-top:24px;">
+  <div class="section-label">Failure Mode Classification</div>
+  <p style="color: var(--text-secondary); font-size: 14px; line-height:1.8; margin:0;">
+    The trained model is a <strong>binary classifier</strong> (failure / no failure) — it does not
+    predict a specific failure category. The "Failure Type" shown after each prediction is a
+    <strong>separate, rule-based heuristic</strong> built from the AI4I 2020 dataset's own published
+    domain thresholds (tool wear, heat dissipation, power, and overstrain limits). It is a transparent
+    explanatory aid, not a second model output.
+  </p>
+</div>
+{% endblock %}

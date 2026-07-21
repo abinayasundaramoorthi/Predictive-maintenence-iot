@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}About — Predictive Maintenance{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">About This Project</h1>
+  <p class="page-subtitle">Contextual IoT predictive maintenance, from raw telemetry to a deployable dashboard.</p>
+</div>
+
+<div class="card">
+  <p style="color: var(--text-secondary); font-size: 14.5px; line-height: 1.8;">
+    This dashboard is an additive web interface built on top of an existing, already-trained
+    Predictive Maintenance system. It reuses the project's existing model artifacts and inference
+    logic without modifying, retraining, or restructuring any part of the original codebase.
+  </p>
+  <div style="display:flex; flex-direction:column; gap:10px; font-size:13.5px; margin-top: 18px;">
+    <div>Model: <strong>{{ model_name }}</strong></div>
+    <div>Dataset: <strong>{{ dataset_name }}</strong></div>
+    <div>Version: <strong>{{ version }}</strong></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:24px;">
+  <div class="section-label">Team</div>
+  <ul style="margin:0; padding-left:18px; color: var(--text-secondary); font-size:14px; line-height:2;">
+    <li>Abinaya S (Team Leader)</li>
+    <li>Himanshu Rawat</li>
+    <li>Nagammai Subramaniyan</li>
+    <li>N. Yogeshwaran</li>
+  </ul>
+</div>
+{% endblock %}
